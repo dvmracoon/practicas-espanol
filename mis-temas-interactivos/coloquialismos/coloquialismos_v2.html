@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mexican Slang Academy 🇲🇽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Estilo específico y aislado para el título principal */
+        .main-slang-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 400;
+            color: #ffffff !important;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transform: rotate(-2deg);
+            text-shadow:
+                4px 4px 0px rgba(0, 0, 0, 0.3),
+                8px 8px 0px rgba(255, 255, 255, 0.15),
+                12px 12px 20px rgba(0, 0, 0, 0.2);
+            filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
+            letter-spacing: 0.02em;
+            line-height: 1.1;
+            position: relative;
+            display: inline-block;
+            animation: subtle-bounce 3s ease-in-out infinite;
+        }
+
+        /* Animación sutil para el título */
+        @keyframes subtle-bounce {
+
+            0%,
+            100% {
+                transform: rotate(-2deg) translateY(0px);
+            }
+
+            50% {
+                transform: rotate(-2deg) translateY(-3px);
+            }
+        }
+
+        /* Responsive para el título específico */
+        @media (max-width: 768px) {
+            .main-slang-title {
+                font-size: 2.5rem;
+                text-shadow:
+                    3px 3px 0px rgba(0, 0, 0, 0.3),
+                    6px 6px 0px rgba(255, 255, 255, 0.15);
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Mantén el contenido centrado, y crea un fondo "full-bleed" con ::before */
+        #mainHeader {
+            position: relative;
+            z-index: 0;
+            background: transparent !important;
+            /* anula el background del tema/Tailwind solo para este header */
+            overflow: visible;
+        }
+
+        /* Pseudo-elemento que pinta el fondo a todo ancho de viewport */
+        #mainHeader::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 100vw;
+            /* ancho del viewport */
+            height: 100%;
+            /* igual altura que el header */
+            pointer-events: none;
+            box-sizing: border-box;
+
+            /* Reproduce el degradado de Tailwind: from-orange-400 → via-red-500 → to-pink-600 */
+            background: linear-gradient(135deg, #fb923c 0%, #ef4444 50%, #ec4899 100%);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header id="mainHeader"
+        class="bg-gradient-to-br from-orange-400 via-red-500 to-pink-600 text-white py-12 px-4 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto text-center relative z-10 text-white">
+            <h1 class="main-slang-title">
+                🌮 No mames... You Speak Spanish?!
+            </h1>
+            <p class="text-xl md:text-2xl opacity-95 mb-6 font-medium">
+                Aprende todo lo que NO te enseñan en la escuela 😏
+            </p>
+            <div class="mt-6">
+                <span
+                    class="bg-white/25 backdrop-blur-sm px-8 py-4 rounded-full text-lg font-semibold shadow-lg border border-white/20">
+                    Real Mexican expressions, zero formalities, 100% auténtico ✨
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage">
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 py-12">
+            <!-- Categories Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    🔥 CATEGORÍAS DE SLANG
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Click on any category to explore Mexican expressions!
+                </p>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Daily Life Category -->
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('daily')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🧃</div>
+                        <h3 class="text-2xl font-bold">Daily Life</h3>
+                        <p class="opacity-90 mb-4">Everyday expressions</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions to sound like a local!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dating & Spicy Category -->
+                <div class="bg-gradient-to-br from-pink-500 to-red-500 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('dating')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">💋🌶️</div>
+                        <h3 class="text-2xl font-bold">Dating & Spicy</h3>
+                        <p class="opacity-90 mb-4">Romance & attraction</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions to flirt like a pro!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work & School Category -->
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('work')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">💼📚</div>
+                        <h3 class="text-2xl font-bold">Work & School</h3>
+                        <p class="opacity-90 mb-4">Professional & academic life</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions to survive the grind!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friends & Drama Category -->
+                <div class="bg-gradient-to-br from-green-500 to-teal-600 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('friends')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🧃👀</div>
+                        <h3 class="text-2xl font-bold">Friends & Drama</h3>
+                        <p class="opacity-90 mb-4">Social circles & gossip</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions to spill the tea!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media / Gen Z Category -->
+                <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('social')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">💻👾</div>
+                        <h3 class="text-2xl font-bold">Social Media & Gen Z</h3>
+                        <p class="opacity-90 mb-4">Internet & modern slang</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions to stay trendy online!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bonus Category -->
+                <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showCategory('bonus')">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🎉🌮</div>
+                        <h3 class="text-2xl font-bold">Bonus Expressions</h3>
+                        <p class="opacity-90 mb-4">Extra spicy slang!</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            16 expressions for the brave souls!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Exercises Category -->
+                <div class="bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-3xl p-8 text-white card-hover cursor-pointer"
+                    onclick="showExercises()">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🎯🧠</div>
+                        <h3 class="text-2xl font-bold">Practice Exercises</h3>
+                        <p class="opacity-90 mb-4">Test your slang skills!</p>
+                        <div class="bg-white/20 rounded-full px-4 py-2 text-sm font-semibold">
+                            Real situations, authentic responses!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fun Facts Section -->
+            <div class="mt-16 bg-white rounded-3xl p-8 shadow-xl">
+                <h3 class="text-3xl font-bold text-center text-gray-800 mb-8">
+                    🤓 Fun Facts About Mexican Slang
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl">
+                        <div class="text-4xl mb-4">🗣️</div>
+                        <h4 class="font-bold text-lg mb-2">Regional Variations</h4>
+                        <p class="text-gray-600">Mexican slang varies by region - what's common in Mexico City might be
+                            different in Guadalajara!</p>
+                    </div>
+                    <div class="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl">
+                        <div class="text-4xl mb-4">📱</div>
+                        <h4 class="font-bold text-lg mb-2">Social Media Impact</h4>
+                        <p class="text-gray-600">Many new expressions come from TikTok, Instagram, and YouTube
+                            influencers!</p>
+                    </div>
+                    <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-pink-100 rounded-2xl">
+                        <div class="text-4xl mb-4">🎭</div>
+                        <h4 class="font-bold text-lg mb-2">Context Matters</h4>
+                        <p class="text-gray-600">The same word can mean different things depending on tone and
+                            situation!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Category Page -->
+    <div id="categoryPage" style="display: none;">
+        <!-- Category Header -->
+        <header id="categoryHeader" class="bg-gradient-to-br from-yellow-400 to-orange-500 text-white py-12 px-4">
+            <div class="max-w-6xl mx-auto">
+                <button onclick="showHome()"
+                    class="mb-6 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center">
+                    ← Volver al inicio
+                </button>
+                <div class="text-center">
+                    <h1 id="categoryTitle" class="text-4xl md:text-6xl font-bold mb-4">
+                        Daily Life 🧃
+                    </h1>
+                    <p class="text-xl md:text-2xl opacity-90">
+                        Authentic Mexican expressions with context and usage
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Expressions Carousel -->
+        <main class="max-w-4xl mx-auto px-4 py-12">
+            <!-- Progress indicator -->
+            <div class="text-center mb-8">
+                <div class="bg-white rounded-full px-6 py-3 shadow-lg inline-block">
+                    <span id="progressText" class="text-lg font-semibold text-gray-700">1 de 16</span>
+                </div>
+            </div>
+
+            <!-- Main Expression Card -->
+            <div class="relative">
+                <!-- Navigation Arrows -->
+                <button id="prevBtn" onclick="previousExpression()"
+                    class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-10 bg-white hover:bg-gray-50 rounded-full p-4 shadow-xl transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
+                </button>
+
+                <button id="nextBtn" onclick="nextExpression()"
+                    class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-10 bg-white hover:bg-gray-50 rounded-full p-4 shadow-xl transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+
+                <!-- Expression Card Container -->
+                <div id="expressionCard"
+                    class="bg-white rounded-3xl p-12 shadow-2xl transition-all duration-500 transform">
+                    <!-- Content will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="flex justify-center mt-8 space-x-2" id="navigationDots">
+                <!-- Dots will be dynamically generated -->
+            </div>
+
+            <!-- Back to Home Button -->
+            <div class="text-center mt-12">
+                <button onclick="showHome()"
+                    class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                    🏠 Explorar más categorías
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Exercises Page -->
+    <div id="exercisesPage" style="display: none;">
+        <!-- Exercises Header -->
+        <header class="bg-gradient-to-br from-emerald-500 to-cyan-600 text-white py-12 px-4">
+            <div class="max-w-6xl mx-auto">
+                <button onclick="showHome()"
+                    class="mb-6 bg-white/20 hover:bg-white/30 px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center">
+                    ← Volver al inicio
+                </button>
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        🎯 Practice Exercises
+                    </h1>
+                    <p class="text-xl md:text-2xl opacity-90">
+                        Test your Mexican slang skills in real situations!
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Exercise Content -->
+        <main class="max-w-4xl mx-auto px-4 py-12">
+            <!-- Score Display -->
+            <div class="text-center mb-8">
+                <div class="bg-white rounded-full px-6 py-3 shadow-lg inline-block">
+                    <span id="scoreText" class="text-lg font-semibold text-gray-700">Score: 0/0</span>
+                </div>
+            </div>
+
+            <!-- Exercise Card -->
+            <div id="exerciseCard" class="bg-white rounded-3xl p-12 shadow-2xl mb-8">
+                <!-- Exercise content will be loaded here -->
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" style="display: none;" class="bg-white rounded-3xl p-12 shadow-2xl text-center">
+                <div class="text-6xl mb-6">🎉</div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Órale! Exercise Complete!</h2>
+                <p id="finalScore" class="text-xl text-gray-600 mb-6"></p>
+                <div class="space-y-4">
+                    <button onclick="restartExercises()"
+                        class="bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-600 hover:to-cyan-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 mr-4">
+                        🔄 Try Again
+                    </button>
+                    <button onclick="showHome()"
+                        class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                        🏠 Back to Categories
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto text-center px-4">
+            <p class="text-xl mb-4">¡Órale! Now you're ready to speak like a true Mexican! 🇲🇽</p>
+            <p class="opacity-75">Keep practicing and don't be afraid to use these expressions!</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentPage = 'home';
+        let currentExpressionIndex = 0;
+        let currentCategoryData = null;
+        let currentExerciseIndex = 0;
+        let exerciseScore = 0;
+        let totalExercises = 0;
+        let selectedAnswer = null;
+
+        // Exercise data with real situations
+        const exerciseData = [
+            {
+                situation: "Your Mexican friend asks: 'How's your Spanish course going?'",
+                emoji: "📚",
+                options: [
+                    { text: "Está padrísimo", correct: true, explanation: "Perfect! This means 'It's awesome!' - exactly what you'd say about something you're enjoying." },
+                    { text: "Estoy bien crudo", correct: false, explanation: "This means 'I'm hungover' - probably not what you want to say about your Spanish class! 😅" },
+                    { text: "Me vale madres", correct: false, explanation: "This means 'I don't give a damn' - not very nice to say about your studies!" },
+                    { text: "Está bien culero", correct: false, explanation: "This means 'It really sucks' - hopefully your Spanish course isn't that bad!" }
+                ]
+            },
+            {
+                situation: "You're really tired at work and your colleague asks how you're feeling:",
+                emoji: "😴",
+                options: [
+                    { text: "Ando bien jetón", correct: true, explanation: "¡Exacto! This means 'I'm super sleepy' - perfect for when you're exhausted." },
+                    { text: "Me late un chingo", correct: false, explanation: "This means 'I really like them' (romantic context) - not about being tired!" },
+                    { text: "Está bien aesthetic", correct: false, explanation: "This means 'It's very aesthetic' - more for describing something visually pleasing." },
+                    { text: "Anda de galán", correct: false, explanation: "This means 'He's being a charmer' - not related to being tired!" }
+                ]
+            },
+            {
+                situation: "Your friend shows you their new outfit and asks what you think:",
+                emoji: "👗",
+                options: [
+                    { text: "Está de pelos", correct: true, explanation: "¡Perfecto! This means 'It's amazing!' - a great compliment for their style." },
+                    { text: "Qué oso", correct: false, explanation: "This means 'How embarrassing!' - definitely not what you want to say about their outfit!" },
+                    { text: "Me carga la chingada", correct: false, explanation: "This means 'This sucks' - way too harsh for commenting on someone's clothes!" },
+                    { text: "Ando de malas", correct: false, explanation: "This means 'I'm in a bad mood' - not a comment about their outfit." }
+                ]
+            },
+            {
+                situation: "Someone at a party is being really annoying and won't leave you alone:",
+                emoji: "😤",
+                options: [
+                    { text: "Está bien sangrón", correct: true, explanation: "¡Correcto! This means 'They're really annoying' - perfect for this situation." },
+                    { text: "Me cae de pelos", correct: false, explanation: "This means 'I really like them' - the opposite of what you'd feel about an annoying person!" },
+                    { text: "Está bien wholesome", correct: false, explanation: "This means 'It's so wholesome' - definitely not describing someone annoying!" },
+                    { text: "Qué mood", correct: false, explanation: "This means 'What a mood' - not really a way to describe an annoying person." }
+                ]
+            },
+            {
+                situation: "Your boss gives you a really difficult project with a tight deadline:",
+                emoji: "💼",
+                options: [
+                    { text: "Está cabrón", correct: true, explanation: "¡Exacto! This means 'It's tough/difficult' - perfect for describing a challenging project." },
+                    { text: "Está bien soft", correct: false, explanation: "This means 'It's so soft/gentle' - the opposite of a difficult project!" },
+                    { text: "Me tira la onda", correct: false, explanation: "This means 'They're flirting with me' - hopefully not what your boss is doing!" },
+                    { text: "Está bien iconic", correct: false, explanation: "This means 'It's so iconic' - not typically how you'd describe a work project." }
+                ]
+            },
+            {
+                situation: "You see someone post something really cringey on social media:",
+                emoji: "📱",
+                options: [
+                    { text: "Me da pena ajena", correct: true, explanation: "¡Perfecto! This means 'I feel secondhand embarrassment' - exactly what you feel watching someone be cringey." },
+                    { text: "Qué flex", correct: false, explanation: "This means 'What a flex' - for when someone is showing off, not being cringey." },
+                    { text: "Ya dilo, reina", correct: false, explanation: "This means 'Spill the tea, queen!' - for when you want gossip, not for cringey posts." },
+                    { text: "Qué vibe", correct: false, explanation: "This means 'What a vibe' - for good energy, not cringey content!" }
+                ]
+            },
+            {
+                situation: "Your friend is being way too clingy in their new relationship:",
+                emoji: "💕",
+                options: [
+                    { text: "Anda de intenso", correct: true, explanation: "¡Correcto! This means 'They're being too intense' - perfect for describing clingy behavior." },
+                    { text: "Me prende", correct: false, explanation: "This means 'They turn me on' - definitely not what you'd say about your friend's clingy behavior!" },
+                    { text: "Está bien bueno", correct: false, explanation: "This means 'They're really hot' - not about being clingy!" },
+                    { text: "Me gusta para novio", correct: false, explanation: "This means 'I like them as boyfriend material' - not describing clingy behavior." }
+                ]
+            },
+            {
+                situation: "You don't want to do your homework and just feel lazy:",
+                emoji: "📝",
+                options: [
+                    { text: "¡Qué hueva!", correct: true, explanation: "¡Exacto! This means 'What a drag!' or expresses laziness - perfect for not wanting to do homework." },
+                    { text: "Hacer la barba", correct: false, explanation: "This means 'to kiss up/brown-nose' - not about being lazy!" },
+                    { text: "Me tronaron el examen", correct: false, explanation: "This means 'I failed the exam badly' - about failing, not about being lazy." },
+                    { text: "Shippear", correct: false, explanation: "This means 'to ship' (wanting two people together romantically) - nothing to do with homework!" }
+                ]
+            }
+        ];
+
+        // Category data with 15+ expressions each
+        const categoryData = {
+            daily: {
+                title: "Daily Life 🧃",
+                color: "from-yellow-400 to-orange-500",
+                expressions: [
+                    { phrase: "¡Qué flojera!", translation: "What laziness! / I'm so lazy!", context: "When you don't want to do anything" },
+                    { phrase: "No manches", translation: "No way! / You're kidding!", context: "Expression of disbelief" },
+                    { phrase: "Estoy bien crudo(a)", translation: "I'm so hungover", context: "After a night of drinking" },
+                    { phrase: "¡Qué hueva!", translation: "What a drag! / So boring!", context: "When something is tedious" },
+                    { phrase: "Ando bien jetón(a)", translation: "I'm super sleepy", context: "When you're really tired" },
+                    { phrase: "Me da mucha pereza", translation: "I'm feeling really lazy", context: "Don't want to do tasks" },
+                    { phrase: "Está padrísimo", translation: "It's awesome!", context: "When something is really cool" },
+                    { phrase: "¡Qué padre!", translation: "How cool!", context: "Expressing excitement" },
+                    { phrase: "Me vale madres", translation: "I don't give a damn", context: "When you don't care (vulgar)" },
+                    { phrase: "Está de pelos", translation: "It's amazing!", context: "Something is excellent" },
+                    { phrase: "¡Órale!", translation: "Wow! / Come on!", context: "Expression of surprise" },
+                    { phrase: "¡Híjole!", translation: "Oh wow! / Geez!", context: "Mild surprise or concern" },
+                    { phrase: "Está cañón", translation: "It's tough/difficult", context: "When something is hard" },
+                    { phrase: "¡Qué onda!", translation: "What's up!", context: "Casual greeting" },
+                    { phrase: "Ando de malas", translation: "I'm in a bad mood", context: "When you're grumpy" },
+                    { phrase: "¡Qué bárbaro!", translation: "How incredible!", context: "Amazement or shock" }
+                ]
+            },
+            dating: {
+                title: "Dating & Spicy 💋🌶️",
+                color: "from-pink-500 to-red-500",
+                expressions: [
+                    { phrase: "Me late", translation: "I like it / I'm into it", context: "When you're attracted to someone", spice: 1 },
+                    { phrase: "Anda de intenso(a)", translation: "They're being too intense", context: "Someone is being clingy", spice: 1 },
+                    { phrase: "Estás bien sabroso(a)", translation: "You're really hot/attractive", context: "Complimenting someone's looks", spice: 2 },
+                    { phrase: "Me trae loco(a)", translation: "They drive me crazy", context: "Strong attraction", spice: 1 },
+                    { phrase: "Está bien bueno(a)", translation: "They're really hot", context: "Physical attraction", spice: 2 },
+                    { phrase: "Me gusta un chorro", translation: "I like them a lot", context: "Strong romantic interest", spice: 2 },
+                    { phrase: "Anda de galán", translation: "He's being a charmer", context: "Someone acting romantic", spice: 1 },
+                    { phrase: "Me tira la onda", translation: "They're flirting with me", context: "Someone showing interest", spice: 1 },
+                    { phrase: "Está bien mamacita", translation: "She's really attractive", context: "Compliment (can be objectifying)", spice: 2 },
+                    { phrase: "Me prende", translation: "They turn me on", context: "Sexual attraction", spice: 3 },
+                    { phrase: "Anda de coqueto(a)", translation: "They're being flirty", context: "Someone flirting around", spice: 1 },
+                    { phrase: "Me late un chingo", translation: "I really like them", context: "Strong attraction (vulgar)", spice: 3 },
+                    { phrase: "Está bien papacito", translation: "He's really handsome", context: "Attractive man", spice: 2 },
+                    { phrase: "Me tiene loquito(a)", translation: "They have me going crazy", context: "Infatuation", spice: 1 },
+                    { phrase: "Anda de caliente", translation: "They're being horny", context: "Sexual desire (vulgar)", spice: 3 },
+                    { phrase: "Me gusta para novio(a)", translation: "I like them as boyfriend/girlfriend material", context: "Serious romantic interest", spice: 1 }
+                ]
+            },
+            work: {
+                title: "Work & School 💼📚",
+                color: "from-blue-500 to-indigo-600",
+                expressions: [
+                    { phrase: "Chamba", translation: "Work / Job", context: "General term for work" },
+                    { phrase: "Hacer la barba", translation: "To kiss up / brown-nose", context: "Sucking up to the boss" },
+                    { phrase: "Me tronaron el examen", translation: "I failed the exam badly", context: "Academic failure" },
+                    { phrase: "Está bien ojete el jefe", translation: "The boss is a real asshole", context: "Complaining about boss (vulgar)" },
+                    { phrase: "Ando bien estresado(a)", translation: "I'm really stressed", context: "Work/school pressure" },
+                    { phrase: "Me tocó chambear", translation: "I have to work", context: "Work obligation" },
+                    { phrase: "Está bien pesado el trabajo", translation: "Work is really tough", context: "Difficult job" },
+                    { phrase: "Me vale verga la escuela", translation: "I don't give a shit about school", context: "School frustration (very vulgar)" },
+                    { phrase: "Ando de huevón", translation: "I'm being lazy", context: "Not wanting to work" },
+                    { phrase: "El maestro está bien mamón", translation: "The teacher is a real jerk", context: "Difficult teacher" },
+                    { phrase: "Me carga la chingada", translation: "This sucks", context: "Work/school frustration (vulgar)" },
+                    { phrase: "Está cabrón el proyecto", translation: "The project is really hard", context: "Difficult assignment" },
+                    { phrase: "Ando hasta la madre", translation: "I'm swamped/overwhelmed", context: "Too much work" },
+                    { phrase: "Me vale madre la tarea", translation: "I don't care about homework", context: "School apathy (vulgar)" },
+                    { phrase: "Está bien culero el horario", translation: "The schedule really sucks", context: "Bad work hours (vulgar)" },
+                    { phrase: "Me tienen hasta la verga", translation: "I'm fed up", context: "Work frustration (very vulgar)" }
+                ]
+            },
+            friends: {
+                title: "Friends & Drama 🧃👀",
+                color: "from-green-500 to-teal-600",
+                expressions: [
+                    { phrase: "Esa morra es bien llevada", translation: "That girl is easy-going", context: "Describing someone's personality" },
+                    { phrase: "Andan de chismosos", translation: "They're gossiping", context: "People spreading rumors" },
+                    { phrase: "Qué oso", translation: "How embarrassing!", context: "Awkward situation" },
+                    { phrase: "Está bien mamón(a)", translation: "They're being a jerk", context: "Someone acting badly" },
+                    { phrase: "Anda de culero(a)", translation: "They're being an asshole", context: "Bad behavior (vulgar)" },
+                    { phrase: "Me cae gordo(a)", translation: "I can't stand them", context: "Disliking someone" },
+                    { phrase: "Está bien chismoso(a)", translation: "They're such a gossip", context: "Someone who spreads rumors" },
+                    { phrase: "Qué pedo contigo", translation: "What's wrong with you?", context: "Confronting someone" },
+                    { phrase: "Anda de mamila", translation: "They're being a crybaby", context: "Someone complaining too much" },
+                    { phrase: "Me cae de pelos", translation: "I really like them", context: "Good friend" },
+                    { phrase: "Está bien sangrón(a)", translation: "They're really annoying", context: "Irritating person" },
+                    { phrase: "Anda de metiche", translation: "They're being nosy", context: "Someone meddling" },
+                    { phrase: "Qué pinche drama", translation: "What fucking drama", context: "Too much unnecessary conflict (vulgar)" },
+                    { phrase: "Me vale verga tu opinión", translation: "I don't give a shit about your opinion", context: "Dismissing someone (very vulgar)" },
+                    { phrase: "Está bien naco(a)", translation: "They're really tacky/low-class", context: "Criticizing someone's style" },
+                    { phrase: "Anda de payaso(a)", translation: "They're acting like a clown", context: "Someone being ridiculous" }
+                ]
+            },
+            social: {
+                title: "Social Media & Gen Z 💻👾",
+                color: "from-purple-500 to-pink-600",
+                expressions: [
+                    { phrase: "Cringe", translation: "Cringey / awkward", context: "Something embarrassing online" },
+                    { phrase: "Shippear", translation: "To ship (romantic pairing)", context: "Wanting two people together" },
+                    { phrase: "Ya dilo, reina", translation: "Spill the tea, queen!", context: "Tell me the gossip" },
+                    { phrase: "No te quemes", translation: "Don't burn yourself / be careful", context: "Warning about risky behavior" },
+                    { phrase: "Está bien aesthetic", translation: "It's very aesthetic", context: "Something visually pleasing" },
+                    { phrase: "Me da pena ajena", translation: "I feel secondhand embarrassment", context: "Cringing at someone else" },
+                    { phrase: "Está bien random", translation: "It's so random", context: "Something unexpected" },
+                    { phrase: "Qué mood", translation: "What a mood", context: "Relating to someone's vibe" },
+                    { phrase: "Está bien soft", translation: "It's so soft/gentle", context: "Something cute or gentle" },
+                    { phrase: "Me triggerea", translation: "It triggers me", context: "Something bothers you" },
+                    { phrase: "Está bien wholesome", translation: "It's so wholesome", context: "Something pure and nice" },
+                    { phrase: "Qué flex", translation: "What a flex", context: "Someone showing off" },
+                    { phrase: "Está bien sus", translation: "It's suspicious", context: "Something seems off" },
+                    { phrase: "Me da ansiedad", translation: "It gives me anxiety", context: "Something stressful" },
+                    { phrase: "Está bien iconic", translation: "It's so iconic", context: "Something legendary" },
+                    { phrase: "Qué vibe", translation: "What a vibe", context: "Good energy/atmosphere" }
+                ]
+            },
+            bonus: {
+                title: "Bonus Expressions 🎉🌮",
+                color: "from-amber-500 to-orange-600",
+                expressions: [
+                    { phrase: "¡Órale!", translation: "Wow! / Come on!", context: "General exclamation" },
+                    { phrase: "Está padrísimo", translation: "It's awesome!", context: "Something really cool" },
+                    { phrase: "Me vale", translation: "I don't care", context: "Indifference" },
+                    { phrase: "¡No mames!", translation: "No fucking way!", context: "Disbelief (vulgar)" },
+                    { phrase: "Está de la verga", translation: "It's fucking terrible", context: "Something really bad (very vulgar)" },
+                    { phrase: "¡Qué pedo!", translation: "What the hell!", context: "Surprise or anger" },
+                    { phrase: "Está bien chingón", translation: "It's fucking awesome", context: "Something amazing (vulgar)" },
+                    { phrase: "Me vale madres", translation: "I don't give a damn", context: "Complete indifference (vulgar)" },
+                    { phrase: "¡Pinche pendejo!", translation: "Fucking idiot!", context: "Insulting someone (very vulgar)" },
+                    { phrase: "Está cabrón", translation: "It's tough/crazy", context: "Difficult or impressive" },
+                    { phrase: "¡Qué chingados!", translation: "What the fuck!", context: "Anger or surprise (very vulgar)" },
+                    { phrase: "Me caga", translation: "It pisses me off", context: "Something annoying (vulgar)" },
+                    { phrase: "Está bien culero", translation: "It really sucks", context: "Something bad (vulgar)" },
+                    { phrase: "¡Vete a la verga!", translation: "Go fuck yourself!", context: "Telling someone off (very vulgar)" },
+                    { phrase: "Está de poca madre", translation: "It's fucking amazing", context: "Something excellent (vulgar)" },
+                    { phrase: "¡Qué mamada!", translation: "What bullshit!", context: "Something ridiculous (vulgar)" }
+                ]
+            }
+        };
+
+        function getSpiceLevel(spice) {
+            if (!spice) return '';
+            const chiles = '🌶️'.repeat(spice);
+            const labels = {
+                1: 'Suave',
+                2: 'Picante',
+                3: 'Muy Picante'
+            };
+            return `
+                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-200">
+                    <div class="flex items-center text-sm">
+                        <span class="mr-2">💬</span>
+                        <span class="text-gray-500">Uso común en México</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-lg mr-2">${chiles}</span>
+                        <span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">${labels[spice]}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCategory(categoryId) {
+            currentPage = categoryId;
+            currentCategoryData = categoryData[categoryId];
+            currentExpressionIndex = 0;
+
+            // Hide home page and main header
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('mainHeader').style.display = 'none';
+
+            // Show category page
+            const categoryPage = document.getElementById('categoryPage');
+            categoryPage.style.display = 'block';
+
+            // Update category page content
+            document.getElementById('categoryTitle').textContent = currentCategoryData.title;
+            document.getElementById('categoryHeader').className = `bg-gradient-to-br ${currentCategoryData.color} text-white py-12 px-4`;
+
+            // Initialize carousel
+            generateNavigationDots();
+            displayCurrentExpression();
+            updateNavigationButtons();
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function displayCurrentExpression() {
+            const expr = currentCategoryData.expressions[currentExpressionIndex];
+            const categoryId = currentPage;
+
+            const cardHTML = `
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <span class="bg-gradient-to-r ${currentCategoryData.color} text-white px-4 py-2 rounded-full text-lg font-bold">
+                            #${currentExpressionIndex + 1}
+                        </span>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
+                            "${expr.phrase}"
+                        </h2>
+                        <p class="text-2xl md:text-3xl text-blue-600 font-semibold mb-4">
+                            ${expr.translation}
+                        </p>
+                        <p class="text-xl text-gray-600 italic max-w-2xl mx-auto">
+                            ${expr.context}
+                        </p>
+                    </div>
+                    
+                    ${categoryId === 'dating' ? getSpiceLevel(expr.spice) : `
+                        <div class="flex items-center justify-center text-lg text-gray-500 mt-8">
+                            <span class="mr-3 text-2xl">💬</span>
+                            <span>Uso común en México</span>
+                        </div>
+                    `}
+                </div>
+            `;
+
+            document.getElementById('expressionCard').innerHTML = cardHTML;
+            document.getElementById('progressText').textContent = `${currentExpressionIndex + 1} de ${currentCategoryData.expressions.length}`;
+        }
+
+        function generateNavigationDots() {
+            const dotsContainer = document.getElementById('navigationDots');
+            const dots = currentCategoryData.expressions.map((_, index) => `
+                <button onclick="goToExpression(${index})" class="w-3 h-3 rounded-full transition-all duration-300 ${index === currentExpressionIndex ? 'bg-gray-800' : 'bg-gray-300 hover:bg-gray-500'}"></button>
+            `).join('');
+            dotsContainer.innerHTML = dots;
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            prevBtn.disabled = currentExpressionIndex === 0;
+            nextBtn.disabled = currentExpressionIndex === currentCategoryData.expressions.length - 1;
+        }
+
+        function nextExpression() {
+            if (currentExpressionIndex < currentCategoryData.expressions.length - 1) {
+                currentExpressionIndex++;
+                displayCurrentExpression();
+                generateNavigationDots();
+                updateNavigationButtons();
+
+                // Add slide animation
+                const card = document.getElementById('expressionCard');
+                card.style.transform = 'translateX(20px)';
+                card.style.opacity = '0.8';
+                setTimeout(() => {
+                    card.style.transform = 'translateX(0)';
+                    card.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        function previousExpression() {
+            if (currentExpressionIndex > 0) {
+                currentExpressionIndex--;
+                displayCurrentExpression();
+                generateNavigationDots();
+                updateNavigationButtons();
+
+                // Add slide animation
+                const card = document.getElementById('expressionCard');
+                card.style.transform = 'translateX(-20px)';
+                card.style.opacity = '0.8';
+                setTimeout(() => {
+                    card.style.transform = 'translateX(0)';
+                    card.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        function goToExpression(index) {
+            currentExpressionIndex = index;
+            displayCurrentExpression();
+            generateNavigationDots();
+            updateNavigationButtons();
+
+            // Add fade animation
+            const card = document.getElementById('expressionCard');
+            card.style.opacity = '0.5';
+            setTimeout(() => {
+                card.style.opacity = '1';
+            }, 200);
+        }
+
+        function showHome() {
+            currentPage = 'home';
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('mainHeader').style.display = 'block';
+            document.getElementById('categoryPage').style.display = 'none';
+            document.getElementById('exercisesPage').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function showExercises() {
+            currentPage = 'exercises';
+            currentExerciseIndex = 0;
+            exerciseScore = 0;
+            totalExercises = exerciseData.length;
+            selectedAnswer = null;
+
+            // Hide other pages
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('categoryPage').style.display = 'none';
+
+            // Show exercises page
+            document.getElementById('exercisesPage').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+
+            // Load first exercise
+            displayCurrentExercise();
+            updateScore();
+
+            window.scrollTo(0, 0);
+        }
+
+        function displayCurrentExercise() {
+            const exercise = exerciseData[currentExerciseIndex];
+
+            const exerciseHTML = `
+                <div class="text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <span class="bg-gradient-to-r from-emerald-500 to-cyan-600 text-white px-4 py-2 rounded-full text-lg font-bold">
+                            Question ${currentExerciseIndex + 1} of ${totalExercises}
+                        </span>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <div class="text-6xl mb-6">${exercise.emoji}</div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-8 leading-relaxed">
+                            ${exercise.situation}
+                        </h2>
+                        <p class="text-xl text-gray-600 mb-8">
+                            What would you say?
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+                        ${exercise.options.map((option, index) => `
+                            <button onclick="selectAnswer(${index})" 
+                                    id="option-${index}"
+                                    class="option-btn bg-gray-50 hover:bg-gray-100 border-2 border-gray-200 hover:border-emerald-400 rounded-2xl p-6 text-left transition-all duration-300 transform hover:scale-105">
+                                <div class="text-lg font-semibold text-gray-800 mb-2">
+                                    "${option.text}"
+                                </div>
+                                <div class="text-sm text-gray-500 italic">
+                                    ${getOptionTranslation(option.text)}
+                                </div>
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <div id="answerFeedback" class="mt-8" style="display: none;">
+                        <!-- Feedback will appear here -->
+                    </div>
+                    
+                    <div id="nextButton" class="mt-8" style="display: none;">
+                        <button onclick="nextExercise()" class="bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-600 hover:to-cyan-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105">
+                            ${currentExerciseIndex === totalExercises - 1 ? 'See Results 🎉' : 'Next Question →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('exerciseCard').innerHTML = exerciseHTML;
+        }
+
+        function selectAnswer(optionIndex) {
+            if (selectedAnswer !== null) return; // Prevent multiple selections
+
+            selectedAnswer = optionIndex;
+            const exercise = exerciseData[currentExerciseIndex];
+            const selectedOption = exercise.options[optionIndex];
+
+            // Update score if correct
+            if (selectedOption.correct) {
+                exerciseScore++;
+            }
+
+            // Style the selected option
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach((btn, index) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-gray-100', 'hover:border-emerald-400', 'hover:scale-105');
+
+                if (index === optionIndex) {
+                    if (selectedOption.correct) {
+                        btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+                    } else {
+                        btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                    }
+                } else if (exercise.options[index].correct) {
+                    // Highlight the correct answer
+                    btn.classList.add('bg-green-50', 'border-green-300', 'text-green-700');
+                }
+            });
+
+            // Show feedback
+            const feedbackHTML = `
+                <div class="bg-${selectedOption.correct ? 'green' : 'red'}-50 border border-${selectedOption.correct ? 'green' : 'red'}-200 rounded-2xl p-6 max-w-2xl mx-auto">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-3">${selectedOption.correct ? '✅' : '❌'}</span>
+                        <h3 class="text-xl font-bold text-${selectedOption.correct ? 'green' : 'red'}-800">
+                            ${selectedOption.correct ? '¡Correcto!' : 'Not quite!'}
+                        </h3>
+                    </div>
+                    <p class="text-${selectedOption.correct ? 'green' : 'red'}-700 text-lg leading-relaxed">
+                        ${selectedOption.explanation}
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('answerFeedback').innerHTML = feedbackHTML;
+            document.getElementById('answerFeedback').style.display = 'block';
+            document.getElementById('nextButton').style.display = 'block';
+
+            updateScore();
+        }
+
+        function nextExercise() {
+            if (currentExerciseIndex < totalExercises - 1) {
+                currentExerciseIndex++;
+                selectedAnswer = null;
+                displayCurrentExercise();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('exerciseCard').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'block';
+
+            const percentage = Math.round((exerciseScore / totalExercises) * 100);
+            let message = '';
+            let emoji = '';
+
+            if (percentage >= 90) {
+                message = "¡Órale! You're practically Mexican now! 🇲🇽";
+                emoji = "🏆";
+            } else if (percentage >= 70) {
+                message = "¡Está padrísimo! You know your slang pretty well!";
+                emoji = "🎉";
+            } else if (percentage >= 50) {
+                message = "Not bad! Keep practicing to sound more Mexican!";
+                emoji = "👍";
+            } else {
+                message = "¡No te preocupes! Practice makes perfect!";
+                emoji = "💪";
+            }
+
+            document.querySelector('#resultsSection .text-6xl').textContent = emoji;
+            document.getElementById('finalScore').innerHTML = `
+                You got <strong>${exerciseScore} out of ${totalExercises}</strong> correct (${percentage}%)!<br>
+                <span class="text-lg">${message}</span>
+            `;
+        }
+
+        function restartExercises() {
+            document.getElementById('exerciseCard').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+            showExercises();
+        }
+
+        function updateScore() {
+            document.getElementById('scoreText').textContent = `Score: ${exerciseScore}/${currentExerciseIndex + (selectedAnswer !== null ? 1 : 0)}`;
+        }
+
+        function getOptionTranslation(phrase) {
+            const translations = {
+                "Está padrísimo": "It's awesome!",
+                "Estoy bien crudo": "I'm so hungover",
+                "Me vale madres": "I don't give a damn",
+                "Está bien culero": "It really sucks",
+                "Ando bien jetón": "I'm super sleepy",
+                "Me late un chingo": "I really like them",
+                "Está bien aesthetic": "It's very aesthetic",
+                "Anda de galán": "He's being a charmer",
+                "Está de pelos": "It's amazing!",
+                "Qué oso": "How embarrassing!",
+                "Me carga la chingada": "This sucks",
+                "Ando de malas": "I'm in a bad mood",
+                "Está bien sangrón": "They're really annoying",
+                "Me cae de pelos": "I really like them",
+                "Está bien wholesome": "It's so wholesome",
+                "Qué mood": "What a mood",
+                "Está cabrón": "It's tough/difficult",
+                "Está bien soft": "It's so soft/gentle",
+                "Me tira la onda": "They're flirting with me",
+                "Está bien iconic": "It's so iconic",
+                "Me da pena ajena": "I feel secondhand embarrassment",
+                "Qué flex": "What a flex",
+                "Ya dilo, reina": "Spill the tea, queen!",
+                "Qué vibe": "What a vibe",
+                "Anda de intenso": "They're being too intense",
+                "Me prende": "They turn me on",
+                "Está bien bueno": "They're really hot",
+                "Me gusta para novio": "I like them as boyfriend material",
+                "¡Qué hueva!": "What a drag! / So boring!",
+                "Hacer la barba": "To kiss up / brown-nose",
+                "Me tronaron el examen": "I failed the exam badly",
+                "Shippear": "To ship (romantic pairing)"
+            };
+            return translations[phrase] || "Translation not found";
+        }
+
+        // Add fade-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .expression-card {
+                animation: fadeIn 0.5s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add click sound effect simulation
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function (e) {
+                if (currentPage !== 'home') {
+                    if (e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        nextExpression();
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        previousExpression();
+                    } else if (e.key === 'Escape') {
+                        showHome();
+                    }
+                }
+            });
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'96c31deff6ebd87a',t:'MTc1NDY5OTEzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
