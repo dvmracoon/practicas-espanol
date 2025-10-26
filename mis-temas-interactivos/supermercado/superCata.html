@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒🐞 SuperCata</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fef7ff 0%, #f0f9ff 50%, #f0fdf4 100%);
+            min-height: 100%;
+        }
+        
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .category-ropa {
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+        }
+        
+        .category-ropa:hover {
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+        }
+        
+        .category-farmacia {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        }
+        
+        .category-farmacia:hover {
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .category-electronicos {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+        }
+        
+        .category-electronicos:hover {
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .category-alimentos {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+        
+        .category-alimentos:hover {
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+        }
+        
+        .category-juguetes {
+            background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+        }
+        
+        .category-juguetes:hover {
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+        
+        .category-hogar {
+            background: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
+        }
+        
+        .category-hogar:hover {
+            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.3);
+        }
+        
+        .cart-animation {
+            animation: cartBounce 0.6s ease-out;
+        }
+        
+        @keyframes cartBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .product-fly {
+            animation: flyToCart 0.8s ease-out;
+        }
+        
+        @keyframes flyToCart {
+            0% { transform: scale(1) translateX(0) translateY(0); opacity: 1; }
+            50% { transform: scale(0.8) translateX(200px) translateY(-100px); opacity: 0.7; }
+            100% { transform: scale(0.3) translateX(400px) translateY(-200px); opacity: 0; }
+        }
+        
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="min-h-full">
+    <div class="floating-icons">
+        <div class="floating-icon" style="top: 10%; left: 5%; animation-delay: 0s;">🛒</div>
+        <div class="floating-icon" style="top: 20%; right: 10%; animation-delay: 1s;">🍎</div>
+        <div class="floating-icon" style="top: 60%; left: 8%; animation-delay: 2s;">🧸</div>
+        <div class="floating-icon" style="top: 70%; right: 15%; animation-delay: 3s;">👕</div>
+        <div class="floating-icon" style="top: 40%; left: 85%; animation-delay: 4s;">💻</div>
+        <div class="floating-icon" style="top: 80%; left: 50%; animation-delay: 5s;">🏠</div>
+    </div>
+
+    <div class="relative z-10">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-red-500 via-pink-500 to-purple-600 p-6 shadow-2xl">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">🛒🐞 SuperCata</h1>
+                    <p class="text-lg text-white drop-shadow-md">Aprende vocabulario y precios jugando</p>
+                </div>
+                <div class="relative">
+                    <button id="cartBtn" class="bg-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
+                        <span class="text-2xl">🛍️</span>
+                        <span id="cartCount" class="bg-red-500 text-white rounded-full px-2 py-1 text-sm font-bold min-w-6 text-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Currency Selector -->
+        <div class="max-w-6xl mx-auto p-4">
+            <div class="bg-white rounded-2xl p-4 shadow-lg mb-6 flex items-center justify-center space-x-4">
+                <span class="text-lg font-semibold text-gray-700">💱 Moneda:</span>
+                <select id="currencySelector" class="bg-yellow-100 border-2 border-yellow-300 rounded-lg px-4 py-2 font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                    <option value="MXN">🇲🇽 Pesos (MXN)</option>
+                    <option value="USD">🇺🇸 Dólares (USD)</option>
+                    <option value="EUR">🇪🇺 Euros (EUR)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Educational Zone -->
+        <div class="max-w-6xl mx-auto p-4 mb-6">
+            <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6 shadow-lg text-center">
+                <h2 class="text-2xl font-bold text-green-800 mb-2">🎓 Aprende vocabulario y números mientras compras</h2>
+                <p class="text-green-700 mb-4">Selecciona una categoría, elige tus productos y practica los precios</p>
+                <button id="vocabularyBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105">
+                    📚 Ver lista de vocabulario
+                </button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <main class="max-w-6xl mx-auto p-4">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                <button class="category-btn category-ropa text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="ropa">
+                    <div class="text-4xl mb-2">👕</div>
+                    <div class="text-lg">Ropa</div>
+                </button>
+                <button class="category-btn category-farmacia text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="farmacia">
+                    <div class="text-4xl mb-2">💊</div>
+                    <div class="text-lg">Farmacia</div>
+                </button>
+                <button class="category-btn category-electronicos text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="electronicos">
+                    <div class="text-4xl mb-2">💻</div>
+                    <div class="text-lg">Electrónicos</div>
+                </button>
+                <button class="category-btn category-alimentos text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="alimentos">
+                    <div class="text-4xl mb-2">🍎</div>
+                    <div class="text-lg">Alimentos</div>
+                </button>
+                <button class="category-btn category-juguetes text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="juguetes">
+                    <div class="text-4xl mb-2">🧸</div>
+                    <div class="text-lg">Juguetería</div>
+                </button>
+                <button class="category-btn category-hogar text-white font-bold py-6 px-4 rounded-2xl shadow-lg" data-category="hogar">
+                    <div class="text-4xl mb-2">🏠</div>
+                    <div class="text-lg">Hogar</div>
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+                <!-- Products will be loaded here -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-purple-200 to-pink-200 p-6 text-center">
+            <p class="text-purple-800 font-semibold text-lg">💛 Creado por Polyglottic para aprender español jugando</p>
+        </footer>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-96 overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-400 to-purple-400 text-white p-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">🛍️ Mi Carrito</h3>
+                    <button id="closeCart" class="text-white hover:text-gray-200 text-2xl">&times;</button>
+                </div>
+            </div>
+            <div class="p-4 max-h-64 overflow-y-auto">
+                <div id="cartItems" class="space-y-3">
+                    <!-- Cart items will appear here -->
+                </div>
+                <div class="border-t pt-4 mt-4">
+                    <div class="flex justify-between items-center text-xl font-bold">
+                        <span>Total:</span>
+                        <span id="cartTotal" class="text-green-600">$0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50">
+                <button id="checkoutBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105">
+                    🧾 Finalizar compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vocabulary Modal -->
+    <div id="vocabularyModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-96 overflow-hidden">
+            <div class="bg-gradient-to-r from-green-400 to-blue-400 text-white p-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">📚 Vocabulario Español ↔ Inglés</h3>
+                    <button id="closeVocabulary" class="text-white hover:text-gray-200 text-2xl">&times;</button>
+                </div>
+            </div>
+            <div class="p-4 max-h-80 overflow-y-auto">
+                <div id="vocabularyList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Vocabulary items will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-96 overflow-hidden">
+            <div class="bg-gradient-to-r from-green-400 to-blue-400 text-white p-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold">💳 Método de Pago</h3>
+                    <button id="closePayment" class="text-white hover:text-gray-200 text-2xl">&times;</button>
+                </div>
+            </div>
+            <div class="p-6 max-h-80 overflow-y-auto">
+                <div class="space-y-4">
+                    <div class="text-center mb-4">
+                        <p class="text-lg font-semibold text-gray-700">Total a pagar: <span id="paymentTotal" class="text-green-600">$0</span></p>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer transition-colors">
+                            <input type="radio" name="paymentMethod" value="credit" class="text-blue-500 focus:ring-blue-400">
+                            <span class="text-2xl">💳</span>
+                            <span class="font-semibold">Tarjeta de Crédito</span>
+                        </label>
+                        
+                        <label class="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer transition-colors">
+                            <input type="radio" name="paymentMethod" value="debit" class="text-blue-500 focus:ring-blue-400">
+                            <span class="text-2xl">💳</span>
+                            <span class="font-semibold">Tarjeta de Débito</span>
+                        </label>
+                        
+                        <label class="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-green-300 cursor-pointer transition-colors">
+                            <input type="radio" name="paymentMethod" value="cash" class="text-green-500 focus:ring-green-400">
+                            <span class="text-2xl">💵</span>
+                            <span class="font-semibold">Efectivo</span>
+                        </label>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <label class="flex items-center space-x-3 p-3 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
+                            <input type="checkbox" id="loyaltyCard" class="text-yellow-500 focus:ring-yellow-400">
+                            <span class="text-2xl">⭐</span>
+                            <span class="font-semibold text-yellow-700">¿Tienes tarjeta de puntos?</span>
+                        </label>
+                        
+                        <div id="loyaltyCardInput" class="hidden mt-3 p-3 bg-yellow-50 rounded-lg">
+                            <label for="cardNumber" class="block text-sm font-semibold text-yellow-700 mb-2">Número de tarjeta:</label>
+                            <input type="text" id="cardNumber" placeholder="1234-5678-9012" class="w-full px-3 py-2 border border-yellow-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        </div>
+                        
+                        <button id="finalizeDirectly" class="w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            🛒 Finalizar Compra
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 bg-gray-50">
+                <button id="processPayment" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    💰 Procesar Pago
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Confirmation Modal -->
+    <div id="paymentConfirmModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full text-center p-8">
+            <div class="text-6xl mb-4">💳</div>
+            <h3 class="text-2xl font-bold text-blue-600 mb-4">Confirmar Pago</h3>
+            <div id="confirmationSummary" class="text-gray-600 mb-6">
+                <!-- Payment confirmation will appear here -->
+            </div>
+            <div class="space-y-3">
+                <button id="finalizePayment" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105">
+                    🛒 Finalizar Compra
+                </button>
+                <button id="cancelPayment" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-xl transition-all duration-300">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full text-center p-8">
+            <div class="text-6xl mb-4">✨</div>
+            <h3 class="text-2xl font-bold text-green-600 mb-4">¡Gracias por comprar en SuperCata! 🐞</h3>
+            <div id="paymentSummary" class="text-gray-600 mb-6">
+                <!-- Payment summary will appear here -->
+            </div>
+            <button id="closeSuccess" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300">
+                ¡Genial!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Product database with prices in MXN
+        const products = {
+            ropa: [
+                { id: 1, name: 'Suéter', english: 'Sweater', icon: '🧥', price: 450 },
+                { id: 2, name: 'Falda', english: 'Skirt', icon: '👗', price: 320 },
+                { id: 3, name: 'Pantalón', english: 'Pants', icon: '👖', price: 380 },
+                { id: 4, name: 'Camisa', english: 'Shirt', icon: '👔', price: 280 },
+                { id: 5, name: 'Zapatos', english: 'Shoes', icon: '👟', price: 650 },
+                { id: 6, name: 'Calcetines', english: 'Socks', icon: '🧦', price: 45 },
+                { id: 7, name: 'Sombrero', english: 'Hat', icon: '👒', price: 180 },
+                { id: 8, name: 'Chaqueta', english: 'Jacket', icon: '🧥', price: 520 },
+                { id: 9, name: 'Vestido', english: 'Dress', icon: '👗', price: 420 },
+                { id: 10, name: 'Corbata', english: 'Tie', icon: '👔', price: 150 },
+                { id: 11, name: 'Bufanda', english: 'Scarf', icon: '🧣', price: 120 },
+                { id: 12, name: 'Guantes', english: 'Gloves', icon: '🧤', price: 95 }
+            ],
+            farmacia: [
+                { id: 13, name: 'Vitaminas', english: 'Vitamins', icon: '💊', price: 150 },
+                { id: 14, name: 'Jarabe', english: 'Syrup', icon: '🍯', price: 85 },
+                { id: 15, name: 'Vendas', english: 'Bandages', icon: '🩹', price: 45 },
+                { id: 16, name: 'Termómetro', english: 'Thermometer', icon: '🌡️', price: 120 },
+                { id: 17, name: 'Aspirinas', english: 'Aspirin', icon: '💊', price: 35 },
+                { id: 18, name: 'Alcohol', english: 'Alcohol', icon: '🧴', price: 25 },
+                { id: 19, name: 'Algodón', english: 'Cotton', icon: '☁️', price: 18 },
+                { id: 20, name: 'Crema', english: 'Cream', icon: '🧴', price: 75 },
+                { id: 21, name: 'Pastillas', english: 'Pills', icon: '💊', price: 65 },
+                { id: 22, name: 'Gotas', english: 'Drops', icon: '💧', price: 55 },
+                { id: 23, name: 'Ungüento', english: 'Ointment', icon: '🧴', price: 85 },
+                { id: 24, name: 'Mascarilla', english: 'Face Mask', icon: '😷', price: 15 }
+            ],
+            electronicos: [
+                { id: 25, name: 'Celular', english: 'Phone', icon: '📱', price: 8500 },
+                { id: 26, name: 'Audífonos', english: 'Headphones', icon: '🎧', price: 650 },
+                { id: 27, name: 'Tablet', english: 'Tablet', icon: '📱', price: 4200 },
+                { id: 28, name: 'Cargador', english: 'Charger', icon: '🔌', price: 180 },
+                { id: 29, name: 'Computadora', english: 'Computer', icon: '💻', price: 15000 },
+                { id: 30, name: 'Televisión', english: 'Television', icon: '📺', price: 12000 },
+                { id: 31, name: 'Radio', english: 'Radio', icon: '📻', price: 350 },
+                { id: 32, name: 'Cámara', english: 'Camera', icon: '📷', price: 2800 },
+                { id: 33, name: 'Reloj', english: 'Watch', icon: '⌚', price: 1200 },
+                { id: 34, name: 'Bocinas', english: 'Speakers', icon: '🔊', price: 850 },
+                { id: 35, name: 'Micrófono', english: 'Microphone', icon: '🎤', price: 450 },
+                { id: 36, name: 'Batería', english: 'Battery', icon: '🔋', price: 85 }
+            ],
+            alimentos: [
+                { id: 37, name: 'Manzana', english: 'Apple', icon: '🍎', price: 25 },
+                { id: 38, name: 'Pan', english: 'Bread', icon: '🍞', price: 35 },
+                { id: 39, name: 'Leche', english: 'Milk', icon: '🥛', price: 22 },
+                { id: 40, name: 'Queso', english: 'Cheese', icon: '🧀', price: 85 },
+                { id: 41, name: 'Plátano', english: 'Banana', icon: '🍌', price: 18 },
+                { id: 42, name: 'Naranja', english: 'Orange', icon: '🍊', price: 20 },
+                { id: 43, name: 'Huevos', english: 'Eggs', icon: '🥚', price: 45 },
+                { id: 44, name: 'Pollo', english: 'Chicken', icon: '🍗', price: 120 },
+                { id: 45, name: 'Pescado', english: 'Fish', icon: '🐟', price: 150 },
+                { id: 46, name: 'Arroz', english: 'Rice', icon: '🍚', price: 28 },
+                { id: 47, name: 'Pasta', english: 'Pasta', icon: '🍝', price: 32 },
+                { id: 48, name: 'Yogurt', english: 'Yogurt', icon: '🥛', price: 38 }
+            ],
+            juguetes: [
+                { id: 49, name: 'Pelota', english: 'Ball', icon: '⚽', price: 120 },
+                { id: 50, name: 'Muñeca', english: 'Doll', icon: '🪆', price: 250 },
+                { id: 51, name: 'Carro', english: 'Car', icon: '🚗', price: 180 },
+                { id: 52, name: 'Rompecabezas', english: 'Puzzle', icon: '🧩', price: 95 },
+                { id: 53, name: 'Oso de peluche', english: 'Teddy Bear', icon: '🧸', price: 320 },
+                { id: 54, name: 'Bloques', english: 'Blocks', icon: '🧱', price: 150 },
+                { id: 55, name: 'Avión', english: 'Airplane', icon: '✈️', price: 200 },
+                { id: 56, name: 'Tren', english: 'Train', icon: '🚂', price: 280 },
+                { id: 57, name: 'Robot', english: 'Robot', icon: '🤖', price: 450 },
+                { id: 58, name: 'Bicicleta', english: 'Bicycle', icon: '🚲', price: 1200 },
+                { id: 59, name: 'Patineta', english: 'Skateboard', icon: '🛹', price: 650 },
+                { id: 60, name: 'Cometa', english: 'Kite', icon: '🪁', price: 85 }
+            ],
+            hogar: [
+                { id: 61, name: 'Almohada', english: 'Pillow', icon: '🛏️', price: 220 },
+                { id: 62, name: 'Toalla', english: 'Towel', icon: '🏖️', price: 150 },
+                { id: 63, name: 'Vela', english: 'Candle', icon: '🕯️', price: 65 },
+                { id: 64, name: 'Planta', english: 'Plant', icon: '🪴', price: 180 },
+                { id: 65, name: 'Lámpara', english: 'Lamp', icon: '💡', price: 350 },
+                { id: 66, name: 'Espejo', english: 'Mirror', icon: '🪞', price: 280 },
+                { id: 67, name: 'Cortinas', english: 'Curtains', icon: '🪟', price: 420 },
+                { id: 68, name: 'Alfombra', english: 'Carpet', icon: '🏠', price: 650 },
+                { id: 69, name: 'Silla', english: 'Chair', icon: '🪑', price: 850 },
+                { id: 70, name: 'Mesa', english: 'Table', icon: '🪑', price: 1200 },
+                { id: 71, name: 'Florero', english: 'Vase', icon: '🏺', price: 120 },
+                { id: 72, name: 'Reloj de pared', english: 'Wall Clock', icon: '🕐', price: 180 }
+            ]
+        };
+
+        // Exchange rates (approximate)
+        const exchangeRates = {
+            MXN: 1,
+            USD: 0.055,
+            EUR: 0.051
+        };
+
+        const currencySymbols = {
+            MXN: '$',
+            USD: '$',
+            EUR: '€'
+        };
+
+        let cart = [];
+        let currentCurrency = 'MXN';
+
+        // DOM elements
+        const productsGrid = document.getElementById('productsGrid');
+        const cartBtn = document.getElementById('cartBtn');
+        const cartCount = document.getElementById('cartCount');
+        const cartModal = document.getElementById('cartModal');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const currencySelector = document.getElementById('currencySelector');
+        const vocabularyModal = document.getElementById('vocabularyModal');
+        const vocabularyList = document.getElementById('vocabularyList');
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentConfirmModal = document.getElementById('paymentConfirmModal');
+        const successModal = document.getElementById('successModal');
+
+        // Event listeners
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => showCategory(btn.dataset.category));
+        });
+
+        cartBtn.addEventListener('click', () => showCart());
+        document.getElementById('closeCart').addEventListener('click', () => hideCart());
+        document.getElementById('closeVocabulary').addEventListener('click', () => hideVocabulary());
+        document.getElementById('closePayment').addEventListener('click', () => hidePayment());
+        document.getElementById('closeSuccess').addEventListener('click', () => hideSuccess());
+        document.getElementById('vocabularyBtn').addEventListener('click', () => showVocabulary());
+        document.getElementById('checkoutBtn').addEventListener('click', () => checkout());
+        document.getElementById('processPayment').addEventListener('click', () => showPaymentConfirmation());
+        document.getElementById('finalizeDirectly').addEventListener('click', () => finalizeDirectPayment());
+        document.getElementById('finalizePayment').addEventListener('click', () => finalizePayment());
+        document.getElementById('cancelPayment').addEventListener('click', () => cancelPayment());
+        
+        // Payment method selection
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.getElementById('processPayment').disabled = false;
+                document.getElementById('finalizeDirectly').disabled = false;
+            });
+        });
+        
+        // Loyalty card checkbox
+        document.getElementById('loyaltyCard').addEventListener('change', (e) => {
+            const loyaltyInput = document.getElementById('loyaltyCardInput');
+            if (e.target.checked) {
+                loyaltyInput.classList.remove('hidden');
+            } else {
+                loyaltyInput.classList.add('hidden');
+                document.getElementById('cardNumber').value = '';
+            }
+        });
+
+        currencySelector.addEventListener('change', (e) => {
+            currentCurrency = e.target.value;
+            updateCartDisplay();
+            // Refresh current category if any is shown
+            const activeCategory = document.querySelector('.category-btn.ring-4');
+            if (activeCategory) {
+                showCategory(activeCategory.dataset.category);
+            }
+        });
+
+        // Functions
+        function formatPrice(price) {
+            const convertedPrice = price * exchangeRates[currentCurrency];
+            const symbol = currencySymbols[currentCurrency];
+            return `${symbol}${convertedPrice.toFixed(2)}`;
+        }
+
+        function showCategory(category) {
+            // Reset all category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                const categoryType = btn.dataset.category;
+                btn.className = `category-btn category-${categoryType} text-white font-bold py-6 px-4 rounded-2xl shadow-lg`;
+            });
+            
+            // Highlight selected category
+            const selectedBtn = document.querySelector(`[data-category="${category}"]`);
+            selectedBtn.className += ' ring-4 ring-white ring-opacity-50';
+
+            const categoryProducts = products[category];
+            productsGrid.innerHTML = '';
+
+            categoryProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card p-6 text-center';
+                productCard.innerHTML = `
+                    <div class="text-6xl mb-4">${product.icon}</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${product.name}</h3>
+                    <p class="text-sm text-gray-600 mb-3">${product.english}</p>
+                    <div class="text-2xl font-bold text-green-600 mb-4">${formatPrice(product.price)}</div>
+                    <button class="add-to-cart bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 transform hover:scale-105" data-product-id="${product.id}">
+                        Agregar al carrito
+                    </button>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Add event listeners to new buttons
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => addToCart(parseInt(e.target.dataset.productId)));
+            });
+        }
+
+        function addToCart(productId) {
+            // Find product in all categories
+            let product = null;
+            for (const category in products) {
+                product = products[category].find(p => p.id === productId);
+                if (product) break;
+            }
+
+            if (product) {
+                cart.push(product);
+                updateCartCount();
+                
+                // Animation
+                const cartButton = document.getElementById('cartBtn');
+                cartButton.classList.add('cart-animation');
+                setTimeout(() => cartButton.classList.remove('cart-animation'), 600);
+            }
+        }
+
+        function updateCartCount() {
+            cartCount.textContent = cart.length;
+        }
+
+        function showCart() {
+            updateCartDisplay();
+            cartModal.classList.remove('hidden');
+        }
+
+        function hideCart() {
+            cartModal.classList.add('hidden');
+        }
+
+        function updateCartDisplay() {
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Tu carrito está vacío</p>';
+            } else {
+                cart.forEach((product, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-center justify-between bg-gray-50 p-3 rounded-lg';
+                    item.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">${product.icon}</span>
+                            <div>
+                                <div class="font-semibold">${product.name}</div>
+                                <div class="text-sm text-gray-600">${formatPrice(product.price)}</div>
+                            </div>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700 font-bold" onclick="removeFromCart(${index})">×</button>
+                    `;
+                    cartItems.appendChild(item);
+                    total += product.price;
+                });
+            }
+
+            cartTotal.textContent = formatPrice(total);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            updateCartDisplay();
+        }
+
+        function showVocabulary() {
+            vocabularyList.innerHTML = '';
+            
+            const categoryNames = {
+                ropa: { spanish: '👕 Ropa', english: 'Clothing' },
+                farmacia: { spanish: '💊 Farmacia', english: 'Pharmacy' },
+                electronicos: { spanish: '💻 Electrónicos', english: 'Electronics' },
+                alimentos: { spanish: '🍎 Alimentos', english: 'Food' },
+                juguetes: { spanish: '🧸 Juguetería', english: 'Toys' },
+                hogar: { spanish: '🏠 Hogar', english: 'Home' }
+            };
+            
+            for (const category in products) {
+                // Create category header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'col-span-full bg-gradient-to-r from-blue-100 to-purple-100 p-3 rounded-lg mb-2';
+                categoryHeader.innerHTML = `
+                    <h4 class="font-bold text-lg text-center text-gray-800">${categoryNames[category].spanish}</h4>
+                    <p class="text-sm text-center text-gray-600">${categoryNames[category].english}</p>
+                `;
+                vocabularyList.appendChild(categoryHeader);
+                
+                // Add products for this category
+                products[category].forEach(product => {
+                    const item = document.createElement('div');
+                    item.className = 'bg-gray-50 p-3 rounded-lg text-center hover:bg-gray-100 transition-colors duration-200';
+                    item.innerHTML = `
+                        <div class="text-3xl mb-2">${product.icon}</div>
+                        <div class="font-semibold text-gray-800">${product.name}</div>
+                        <div class="text-sm text-gray-600">${product.english}</div>
+                        <div class="text-xs text-green-600 mt-1">${formatPrice(product.price)}</div>
+                    `;
+                    vocabularyList.appendChild(item);
+                });
+            }
+            
+            vocabularyModal.classList.remove('hidden');
+        }
+
+        function hideVocabulary() {
+            vocabularyModal.classList.add('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) return;
+            
+            // Calculate total
+            let total = 0;
+            cart.forEach(product => {
+                total += product.price;
+            });
+            
+            // Show payment modal
+            document.getElementById('paymentTotal').textContent = formatPrice(total);
+            hideCart();
+            paymentModal.classList.remove('hidden');
+        }
+        
+        function hidePayment() {
+            paymentModal.classList.add('hidden');
+            // Reset form
+            document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+                radio.checked = false;
+            });
+            document.getElementById('loyaltyCard').checked = false;
+            document.getElementById('loyaltyCardInput').classList.add('hidden');
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('processPayment').disabled = true;
+            document.getElementById('finalizeDirectly').disabled = true;
+        }
+        
+        function showPaymentConfirmation() {
+            const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+            const hasLoyaltyCard = document.getElementById('loyaltyCard').checked;
+            const cardNumber = document.getElementById('cardNumber').value;
+            
+            if (!selectedPayment) return;
+            
+            // Calculate total
+            let total = 0;
+            cart.forEach(product => {
+                total += product.price;
+            });
+            
+            // Create payment summary
+            let paymentMethod = '';
+            switch(selectedPayment.value) {
+                case 'credit':
+                    paymentMethod = '💳 Tarjeta de Crédito';
+                    break;
+                case 'debit':
+                    paymentMethod = '💳 Tarjeta de Débito';
+                    break;
+                case 'cash':
+                    paymentMethod = '💵 Efectivo';
+                    break;
+            }
+            
+            let confirmationText = `<div class="text-left space-y-2">
+                <p><strong>Total a pagar:</strong> ${formatPrice(total)}</p>
+                <p><strong>Método de pago:</strong> ${paymentMethod}</p>`;
+            
+            if (hasLoyaltyCard && cardNumber) {
+                confirmationText += `<p><strong>Tarjeta de puntos:</strong> ${cardNumber}</p>`;
+            }
+            
+            confirmationText += `</div>`;
+            
+            document.getElementById('confirmationSummary').innerHTML = confirmationText;
+            
+            // Store payment data for final confirmation
+            window.currentPaymentData = {
+                method: paymentMethod,
+                total: total,
+                loyaltyCard: hasLoyaltyCard,
+                cardNumber: cardNumber
+            };
+            
+            // Show confirmation modal
+            hidePayment();
+            paymentConfirmModal.classList.remove('hidden');
+        }
+        
+        function finalizeDirectPayment() {
+            const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+            const hasLoyaltyCard = document.getElementById('loyaltyCard').checked;
+            const cardNumber = document.getElementById('cardNumber').value;
+            
+            if (!selectedPayment) return;
+            
+            // Create payment method text
+            let paymentMethod = '';
+            switch(selectedPayment.value) {
+                case 'credit':
+                    paymentMethod = '💳 Tarjeta de Crédito';
+                    break;
+                case 'debit':
+                    paymentMethod = '💳 Tarjeta de Débito';
+                    break;
+                case 'cash':
+                    paymentMethod = '💵 Efectivo';
+                    break;
+            }
+            
+            // Create final payment summary
+            let summaryText = `Pago procesado con ${paymentMethod}`;
+            if (hasLoyaltyCard && cardNumber) {
+                summaryText += `<br>⭐ Puntos acumulados en tarjeta ${cardNumber}`;
+            }
+            
+            document.getElementById('paymentSummary').innerHTML = summaryText;
+            
+            // Clear cart and show success
+            cart = [];
+            updateCartCount();
+            hidePayment();
+            successModal.classList.remove('hidden');
+        }
+        
+        function finalizePayment() {
+            const paymentData = window.currentPaymentData;
+            
+            // Create final payment summary
+            let summaryText = `Pago procesado con ${paymentData.method}`;
+            if (paymentData.loyaltyCard && paymentData.cardNumber) {
+                summaryText += `<br>⭐ Puntos acumulados en tarjeta ${paymentData.cardNumber}`;
+            }
+            
+            document.getElementById('paymentSummary').innerHTML = summaryText;
+            
+            // Clear cart and show success
+            cart = [];
+            updateCartCount();
+            paymentConfirmModal.classList.add('hidden');
+            successModal.classList.remove('hidden');
+        }
+        
+        function cancelPayment() {
+            paymentConfirmModal.classList.add('hidden');
+            paymentModal.classList.remove('hidden');
+        }
+
+        function hideSuccess() {
+            successModal.classList.add('hidden');
+        }
+
+        // Initialize with first category
+        showCategory('alimentos');
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9946c682d3366dba',t:'MTc2MTQ0ODM4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
