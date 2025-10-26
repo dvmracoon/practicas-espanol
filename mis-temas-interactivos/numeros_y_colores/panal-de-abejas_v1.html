@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐝 Panal de Abejas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fef7e0 0%, #fff8dc 100%);
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .flying-bee {
+            position: absolute;
+            font-size: 20px;
+            animation: fly 8s infinite linear;
+            z-index: 1;
+        }
+
+        .flying-bee:nth-child(1) {
+            top: 15%;
+            animation-delay: 0s;
+        }
+
+        .flying-bee:nth-child(2) {
+            top: 25%;
+            animation-delay: -2s;
+        }
+
+        .flying-bee:nth-child(3) {
+            top: 35%;
+            animation-delay: -4s;
+        }
+
+        .flying-bee:nth-child(4) {
+            top: 45%;
+            animation-delay: -6s;
+        }
+
+        @keyframes fly {
+            0% {
+                left: -50px;
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(10px) rotate(-3deg);
+            }
+            75% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+            100% {
+                left: 100%;
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff9f43;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #4ecdc4;
+            margin: 10px 0 0 0;
+            font-weight: 600;
+        }
+
+        .honeycomb-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .honeycomb {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hex {
+            width: 80px;
+            height: 80px;
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            position: relative;
+        }
+
+        .hex:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+            z-index: 10;
+        }
+
+        .hex.selected {
+            animation: buzz 0.5s ease;
+        }
+
+        @keyframes buzz {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1) rotate(2deg); }
+            50% { transform: scale(1.15) rotate(-2deg); }
+            75% { transform: scale(1.1) rotate(1deg); }
+        }
+
+        /* Posicionamiento especial para formar panal */
+        .hex:nth-child(1) { grid-column: 4; }
+        .hex:nth-child(2) { grid-column: 3; }
+        .hex:nth-child(3) { grid-column: 4; }
+        .hex:nth-child(4) { grid-column: 5; }
+        .hex:nth-child(5) { grid-column: 2; }
+        .hex:nth-child(6) { grid-column: 3; }
+        .hex:nth-child(7) { grid-column: 4; }
+        .hex:nth-child(8) { grid-column: 5; }
+        .hex:nth-child(9) { grid-column: 6; }
+        .hex:nth-child(10) { grid-column: 1; }
+        .hex:nth-child(11) { grid-column: 2; }
+        .hex:nth-child(12) { grid-column: 3; }
+        .hex:nth-child(13) { grid-column: 4; }
+        .hex:nth-child(14) { grid-column: 5; }
+        .hex:nth-child(15) { grid-column: 6; }
+        .hex:nth-child(16) { grid-column: 7; }
+        .hex:nth-child(17) { grid-column: 2; }
+        .hex:nth-child(18) { grid-column: 3; }
+        .hex:nth-child(19) { grid-column: 4; }
+        .hex:nth-child(20) { grid-column: 5; }
+        .hex:nth-child(21) { grid-column: 6; }
+
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .color-btn.active {
+            transform: scale(1.15);
+            border-color: #333;
+            border-width: 5px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(51, 51, 51, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(51, 51, 51, 0); }
+        }
+
+        .color-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .instructions {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #888;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+        }
+
+        .practice-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .time-controls {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .time-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .time-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .time-btn {
+            background: #54a0ff;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .time-btn:hover {
+            background: #3742fa;
+            transform: scale(1.1);
+        }
+
+        .time-display {
+            background: #fff;
+            border: 3px solid #54a0ff;
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            min-width: 80px;
+        }
+
+        .practice-btn {
+            background: linear-gradient(135deg, #ff9f43, #feca57);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 159, 67, 0.4);
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .practice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 159, 67, 0.6);
+        }
+
+        .challenge-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid #ff9f43;
+        }
+
+        .challenge-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .challenge-target {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .target-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 30px;
+            border-radius: 20px;
+            border: 3px solid #ff9f43;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .target-color-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .target-number-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .challenge-label {
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        .challenge-value {
+            color: #000;
+            font-weight: 900;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .challenge-timer {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin: 15px 0;
+        }
+
+        .cancel-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .cancel-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .hex.challenge-mode {
+            animation: glow 1s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 159, 67, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 159, 67, 0.8); }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #48ca8b, #17c0eb);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            animation: celebrate 0.6s ease;
+        }
+
+        .fail-message {
+            background: linear-gradient(135deg, #ff6b6b, #ff9f43);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 20px 0;
+            animation: shake 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 768px) {
+            .hex {
+                width: 60px;
+                height: 60px;
+                font-size: 1.4rem;
+            }
+            
+            .color-btn {
+                width: 60px;
+                height: 60px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .honeycomb {
+                max-width: 500px;
+            }
+
+            .target-number {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+
+            .challenge-target {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flying-bee">🐝</div>
+    <div class="flying-bee">🐝</div>
+    <div class="flying-bee">🐝</div>
+    <div class="flying-bee">🐝</div>
+
+    <div class="container">
+        <header>
+            <h1>🐝 Panal de Abejas</h1>
+            <p class="subtitle">Aprende colores con números del 0 al 20</p>
+        </header>
+
+        <div class="instructions">
+            🎨 ¡Primero elige un color, luego toca un número para pintarlo! 🎨
+        </div>
+
+        <div class="practice-section">
+            <div class="time-controls">
+                <div class="time-label">⏰ Elige el tiempo del desafío</div>
+                <div class="time-selector">
+                    <button class="time-btn" id="decreaseTime">-</button>
+                    <div class="time-display" id="timeDisplay">10s</div>
+                    <button class="time-btn" id="increaseTime">+</button>
+                </div>
+                <button class="practice-btn" id="practiceBtn">🚀 ¡Empezar Desafío!</button>
+            </div>
+            <div class="challenge-display" id="challengeDisplay" style="display: none;">
+                <div class="challenge-text">¡Encuentra esta combinación!</div>
+                <div class="challenge-target" id="challengeTarget">
+                    <div class="target-text">
+                        <div class="target-color-text" id="targetColorText"><span class="challenge-label">Color:</span> <span class="challenge-value">Rojo</span></div>
+                        <div class="target-number-text" id="targetNumberText"><span class="challenge-label">Número:</span> <span class="challenge-value">Cinco</span></div>
+                    </div>
+                </div>
+                <div class="challenge-timer" id="challengeTimer">Tiempo: 10s</div>
+                <button class="cancel-btn" id="cancelBtn">Cancelar</button>
+            </div>
+        </div>
+
+        <main>
+            <div class="honeycomb-container">
+                <div class="honeycomb" id="honeycomb">
+                    <!-- Los hexágonos se generarán con JavaScript -->
+                </div>
+            </div>
+
+            <div class="color-palette">
+                <div class="color-btn" data-color="#ff6b6b" style="background-color: #ff6b6b;">
+                    <span class="color-label">Rojo</span>
+                </div>
+                <div class="color-btn" data-color="#ff9f43" style="background-color: #ff9f43;">
+                    <span class="color-label">Naranja</span>
+                </div>
+                <div class="color-btn" data-color="#feca57" style="background-color: #feca57;">
+                    <span class="color-label">Amarillo</span>
+                </div>
+                <div class="color-btn" data-color="#48ca8b" style="background-color: #48ca8b;">
+                    <span class="color-label">Verde</span>
+                </div>
+                <div class="color-btn" data-color="#54a0ff" style="background-color: #54a0ff;">
+                    <span class="color-label">Azul</span>
+                </div>
+                <div class="color-btn" data-color="#9c88ff" style="background-color: #9c88ff;">
+                    <span class="color-label">Morado</span>
+                </div>
+                <div class="color-btn" data-color="#2f3640" style="background-color: #2f3640; color: white;">
+                    <span class="color-label">Negro</span>
+                </div>
+                <div class="color-btn" data-color="#ffffff" style="background-color: #ffffff; border-color: #ddd;">
+                    <span class="color-label">Blanco</span>
+                </div>
+                <div class="color-btn" data-color="#8b4513" style="background-color: #8b4513; color: white;">
+                    <span class="color-label">Café</span>
+                </div>
+                <div class="color-btn" data-color="#ff69b4" style="background-color: #ff69b4;">
+                    <span class="color-label">Rosa</span>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            🌸 Creado por Polyglottic para aprender con diversión.
+        </footer>
+    </div>
+
+    <script>
+        let selectedColor = null;
+        let challengeMode = false;
+        let challengeTimer = null;
+        let targetNumber = null;
+        let targetColor = null;
+        let challengeTime = 10; // Tiempo por defecto en segundos
+        let usedNumbers = new Set(); // Para rastrear números ya usados
+        
+        const colors = [
+            { code: '#ff6b6b', name: 'Rojo' },
+            { code: '#ff9f43', name: 'Naranja' },
+            { code: '#feca57', name: 'Amarillo' },
+            { code: '#48ca8b', name: 'Verde' },
+            { code: '#54a0ff', name: 'Azul' },
+            { code: '#9c88ff', name: 'Morado' },
+            { code: '#2f3640', name: 'Negro' },
+            { code: '#ffffff', name: 'Blanco' },
+            { code: '#8b4513', name: 'Café' },
+            { code: '#ff69b4', name: 'Rosa' }
+        ];
+
+        const numbersInWords = [
+            'Cero', 'Uno', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez',
+            'Once', 'Doce', 'Trece', 'Catorce', 'Quince', 'Dieciséis', 'Diecisiete', 'Dieciocho', 'Diecinueve', 'Veinte'
+        ];
+        
+        // Crear hexágonos del 0 al 20
+        const honeycomb = document.getElementById('honeycomb');
+        for (let i = 0; i <= 20; i++) {
+            const hex = document.createElement('div');
+            hex.className = 'hex';
+            hex.textContent = i;
+            hex.dataset.number = i;
+            honeycomb.appendChild(hex);
+        }
+
+        // Manejar selección de colores
+        const colorBtns = document.querySelectorAll('.color-btn');
+        colorBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Permitir selección de color durante el desafío
+                
+                // Remover clase active de todos los botones
+                colorBtns.forEach(b => b.classList.remove('active'));
+                
+                // Agregar clase active al botón seleccionado
+                this.classList.add('active');
+                selectedColor = this.dataset.color;
+                
+                // Mostrar mensaje de color seleccionado
+                updateInstructions(`🎨 Color ${this.querySelector('.color-label').textContent} seleccionado. ¡Ahora toca un número!`);
+            });
+        });
+
+        // Manejar clic en hexágonos
+        const hexagons = document.querySelectorAll('.hex');
+        hexagons.forEach(hex => {
+            hex.addEventListener('click', function() {
+                if (challengeMode) {
+                    // Verificar si el estudiante seleccionó un color primero
+                    if (!selectedColor) {
+                        updateInstructions('🎨 ¡Primero selecciona un color de la paleta! 🎨');
+                        return;
+                    }
+                    
+                    // Verificar si es la combinación correcta
+                    const clickedNumber = parseInt(this.textContent);
+                    if (clickedNumber === targetNumber && selectedColor === targetColor) {
+                        // ¡Correcto!
+                        endChallenge(true);
+                        this.style.backgroundColor = selectedColor;
+                        this.classList.add('selected');
+                        setTimeout(() => this.classList.remove('selected'), 500);
+                    } else {
+                        // Incorrecto
+                        endChallenge(false);
+                    }
+                    return;
+                }
+                
+                if (selectedColor) {
+                    this.style.backgroundColor = selectedColor;
+                    this.classList.add('selected');
+                    
+                    // Remover la clase después de la animación
+                    setTimeout(() => {
+                        this.classList.remove('selected');
+                    }, 500);
+                    
+                    updateInstructions(`¡Excelente! El número ${this.textContent} ahora es ${getColorName(selectedColor)}. ¡Sigue pintando! 🐝`);
+                } else {
+                    updateInstructions('🎨 ¡Primero selecciona un color de la paleta! 🎨');
+                }
+            });
+        });
+
+        // Manejar controles de tiempo
+        document.getElementById('decreaseTime').addEventListener('click', function() {
+            if (challengeTime > 3) {
+                challengeTime--;
+                document.getElementById('timeDisplay').textContent = challengeTime + 's';
+            }
+        });
+
+        document.getElementById('increaseTime').addEventListener('click', function() {
+            if (challengeTime < 30) {
+                challengeTime++;
+                document.getElementById('timeDisplay').textContent = challengeTime + 's';
+            }
+        });
+
+        // Manejar botón de práctica
+        document.getElementById('practiceBtn').addEventListener('click', startChallenge);
+        document.getElementById('cancelBtn').addEventListener('click', () => stopChallenge());
+
+        function startChallenge() {
+            challengeMode = true;
+            
+            // Generar número único (no repetido)
+            let availableNumbers = [];
+            for (let i = 0; i <= 20; i++) {
+                if (!usedNumbers.has(i)) {
+                    availableNumbers.push(i);
+                }
+            }
+            
+            // Si ya se usaron todos los números, reiniciar
+            if (availableNumbers.length === 0) {
+                usedNumbers.clear();
+                for (let i = 0; i <= 20; i++) {
+                    availableNumbers.push(i);
+                }
+                showResetMessage();
+            }
+            
+            // Seleccionar número aleatorio de los disponibles
+            const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+            targetNumber = availableNumbers[randomIndex];
+            usedNumbers.add(targetNumber);
+            
+            // Generar color aleatorio
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            targetColor = randomColor.code;
+            
+            // NO seleccionar automáticamente el color - el estudiante debe hacerlo
+            selectedColor = null;
+            colorBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar el desafío
+            document.getElementById('targetColorText').innerHTML = `<span class="challenge-label">Color:</span> <span class="challenge-value">${randomColor.name}</span>`;
+            document.getElementById('targetNumberText').innerHTML = `<span class="challenge-label">Número:</span> <span class="challenge-value">${numbersInWords[targetNumber]}</span>`;
+            document.getElementById('challengeDisplay').style.display = 'block';
+            document.getElementById('practiceBtn').style.display = 'none';
+            
+            // Agregar efecto visual a todos los hexágonos
+            hexagons.forEach(hex => hex.classList.add('challenge-mode'));
+            
+            // Iniciar temporizador
+            let timeLeft = challengeTime;
+            document.getElementById('challengeTimer').textContent = `Tiempo: ${timeLeft}s`;
+            
+            challengeTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('challengeTimer').textContent = `Tiempo: ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    endChallenge(false);
+                }
+            }, 1000);
+            
+            updateInstructions(`⏰ ¡Lee las instrucciones, selecciona el color correcto y encuentra el número! Tienes ${challengeTime} segundos.`);
+        }
+
+        function endChallenge(success) {
+            clearInterval(challengeTimer);
+            
+            // Remover efectos visuales temporalmente
+            hexagons.forEach(hex => hex.classList.remove('challenge-mode'));
+            
+            // Mostrar resultado
+            const resultDiv = document.createElement('div');
+            if (success) {
+                resultDiv.className = 'success-message';
+                resultDiv.textContent = `🎉 ¡Excelente! Encontraste el número ${numbersInWords[targetNumber]} en color ${getColorName(targetColor)}. ¡Siguiente desafío! 🐝`;
+            } else {
+                resultDiv.className = 'fail-message';
+                resultDiv.textContent = `⏰ ¡Tiempo agotado! Era el número ${numbersInWords[targetNumber]} en color ${getColorName(targetColor)}. ¡Siguiente desafío! 💪`;
+            }
+            
+            document.querySelector('.practice-section').appendChild(resultDiv);
+            
+            // Continuar con el siguiente desafío después de 2 segundos
+            setTimeout(() => {
+                if (resultDiv.parentNode) {
+                    resultDiv.parentNode.removeChild(resultDiv);
+                }
+                // Iniciar nuevo desafío automáticamente
+                startNextChallenge();
+            }, 2000);
+        }
+
+        function startNextChallenge() {
+            // Generar número único (no repetido)
+            let availableNumbers = [];
+            for (let i = 0; i <= 20; i++) {
+                if (!usedNumbers.has(i)) {
+                    availableNumbers.push(i);
+                }
+            }
+            
+            // Si ya se usaron todos los números, reiniciar
+            if (availableNumbers.length === 0) {
+                usedNumbers.clear();
+                for (let i = 0; i <= 20; i++) {
+                    availableNumbers.push(i);
+                }
+                showResetMessage();
+            }
+            
+            // Seleccionar número aleatorio de los disponibles
+            const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+            targetNumber = availableNumbers[randomIndex];
+            usedNumbers.add(targetNumber);
+            
+            // Generar color aleatorio
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            targetColor = randomColor.code;
+            
+            // NO seleccionar automáticamente el color - el estudiante debe hacerlo
+            selectedColor = null;
+            colorBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Actualizar el desafío
+            document.getElementById('targetColorText').innerHTML = `<span class="challenge-label">Color:</span> <span class="challenge-value">${randomColor.name}</span>`;
+            document.getElementById('targetNumberText').innerHTML = `<span class="challenge-label">Número:</span> <span class="challenge-value">${numbersInWords[targetNumber]}</span>`;
+            
+            // Agregar efecto visual a todos los hexágonos
+            hexagons.forEach(hex => hex.classList.add('challenge-mode'));
+            
+            // Iniciar temporizador
+            let timeLeft = challengeTime;
+            document.getElementById('challengeTimer').textContent = `Tiempo: ${timeLeft}s`;
+            
+            challengeTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('challengeTimer').textContent = `Tiempo: ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    endChallenge(false);
+                }
+            }, 1000);
+            
+            updateInstructions(`⏰ ¡Lee las instrucciones, selecciona el color correcto y encuentra el número! Tienes ${challengeTime} segundos.`);
+        }
+
+        function stopChallenge() {
+            challengeMode = false;
+            clearInterval(challengeTimer);
+            
+            // Remover efectos visuales
+            hexagons.forEach(hex => hex.classList.remove('challenge-mode'));
+            
+            // Ocultar pantalla de desafío
+            document.getElementById('challengeDisplay').style.display = 'none';
+            document.getElementById('practiceBtn').style.display = 'block';
+            
+            // Resetear selección
+            selectedColor = null;
+            colorBtns.forEach(btn => btn.classList.remove('active'));
+            
+            updateInstructions('🎨 ¡Primero elige un color, luego toca un número para pintarlo! 🎨');
+        }
+
+        function showResetMessage() {
+            const resetDiv = document.createElement('div');
+            resetDiv.className = 'success-message';
+            resetDiv.textContent = '🎉 ¡Completaste todos los números del 0 al 20! Empezando una nueva ronda con panal limpio. 🐝';
+            document.querySelector('.practice-section').appendChild(resetDiv);
+            
+            // Limpiar todos los colores del panal
+            hexagons.forEach(hex => {
+                hex.style.backgroundColor = '#fff3cd'; // Color original del panal
+            });
+            
+            setTimeout(() => {
+                if (resetDiv.parentNode) {
+                    resetDiv.parentNode.removeChild(resetDiv);
+                }
+            }, 3000);
+        }
+
+        function updateInstructions(message) {
+            const instructions = document.querySelector('.instructions');
+            instructions.textContent = message;
+            
+            // Volver al mensaje original después de 3 segundos (solo si no estamos en modo desafío)
+            if (!challengeMode) {
+                setTimeout(() => {
+                    instructions.textContent = '🎨 ¡Primero elige un color, luego toca un número para pintarlo! 🎨';
+                }, 3000);
+            }
+        }
+
+        function getColorName(color) {
+            const colorNames = {
+                '#ff6b6b': 'rojo',
+                '#ff9f43': 'naranja',
+                '#feca57': 'amarillo',
+                '#48ca8b': 'verde',
+                '#54a0ff': 'azul',
+                '#9c88ff': 'morado',
+                '#2f3640': 'negro',
+                '#ffffff': 'blanco',
+                '#8b4513': 'café',
+                '#ff69b4': 'rosa'
+            };
+            return colorNames[color] || 'colorido';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9946a78bb2dc6dba',t:'MTc2MTQ0NzExMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
